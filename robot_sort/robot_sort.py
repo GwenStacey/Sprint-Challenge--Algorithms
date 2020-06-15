@@ -92,12 +92,55 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+
     def sort(self):
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        #Pick up first item and step over None
+        self.swap_item
+        if self.can_move_right:
+            self.move_right()
+        print("Lights on")
+        self.set_light_on()
+        #While the light is on, let's move up the list
+        while self.light_is_on():
+            #Start by moving up the list
+            if self.compare_item() == -1 and self.can_move_right():
+                #We can move right and our number is less than so swap them and move that number up
+                print("Swapping right")
+                self.swap_item()
+                self.move_right()
+            if self.compare_item() == 1 and self.can_move_left():
+                #We can move left and our number is greater than so swap them and move that one down
+                print("Swapping left")
+            if self.can_move_right() and self.compare_item()==1:
+                #We can move right and our number is greater so move right
+                print("Moving Right")
+                self.move_right()
+            if self.can_move_left() and self.compare_item()==-1:
+                #If our number is less than and we can move left, go ahead and move it back down
+                print("Moving Left")
+                self.move_left()
+            
+            if self.compare_item() == 1 and not self.can_move_right():
+                #Our number is greater, but we can't move right and are at the end of the list
+                self.swap_item()
+                self.move_left()
+                print("Made it right")
+            if self.compare_item()==-1 and not self.can_move_left():
+                self.swap_item()
+                self.move_right()
+                print("Made it left")
+            
+            
+            
+                
+            
+                
+                
+
+        return "Sorted!"
 
 
 if __name__ == "__main__":
