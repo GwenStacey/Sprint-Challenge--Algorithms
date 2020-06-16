@@ -98,49 +98,55 @@ class SortingRobot:
         Sort the robot's list.
         """
         #Pick up first item and step over None
-        self.swap_item
-        if self.can_move_right:
-            self.move_right()
         print("Lights on")
         self.set_light_on()
         #While the light is on, let's move up the list
         while self.light_is_on():
+            if self.compare_item()==None and not self.can_move_right():
+                print("Lights out")
+                self.set_light_off()
+                break
             #Start by moving up the list
-            if self.compare_item() == -1 and self.can_move_right():
-                #We can move right and our number is less than so swap them and move that number up
-                print("Swapping right")
-                self.swap_item()
-                self.move_right()
-            if self.compare_item() == 1 and self.can_move_left():
-                #We can move left and our number is greater than so swap them and move that one down
-                print("Swapping left")
-            if self.can_move_right() and self.compare_item()==1:
-                #We can move right and our number is greater so move right
-                print("Moving Right")
-                self.move_right()
-            if self.can_move_left() and self.compare_item()==-1:
-                #If our number is less than and we can move left, go ahead and move it back down
-                print("Moving Left")
-                self.move_left()
-            
-            if self.compare_item() == 1 and not self.can_move_right():
-                #Our number is greater, but we can't move right and are at the end of the list
-                self.swap_item()
-                self.move_left()
-                print("Made it right")
-            if self.compare_item()==-1 and not self.can_move_left():
-                self.swap_item()
-                self.move_right()
-                print("Made it left")
+            while self.can_move_right():
+                if self.compare_item()==None:
+                    self.swap_item()
+                    print("Swapped for none")
+                    self.move_right()
+                elif self.compare_item()==1 or self.compare_item()==0:
+                    print("Greater than or same, moving right")
+                    self.move_right()
+                elif self.compare_item()==-1:
+                    self.swap_item()
+                    print("Swapped for bigger number")
+                    self.move_right() 
             
             
+
+        
+            while self.can_move_left():
+                if self.compare_item()==None and self.can_move_right():
+                    print("Made it back to None")
+                    self.swap_item()
+                    self.move_right()
+                    break
+                elif self.compare_item()==-1 or self.compare_item()==0:
+                    print("Less than or same, moving left")
+                    self.move_left()
+                elif self.compare_item()==1:
+                    print("Swapping for smaller number")
+                    self.swap_item()
+                    self.move_left()
             
-                
+            
+            
+            
+                #Two conditions: None in hand or can't move right? If not none we need to move left
+                # switch it with wherever we put None
             
                 
                 
 
-        return "Sorted!"
+        return print("Sorted!")
 
 
 if __name__ == "__main__":
